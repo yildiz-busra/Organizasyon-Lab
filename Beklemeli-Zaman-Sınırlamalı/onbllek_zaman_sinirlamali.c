@@ -2,15 +2,20 @@
 #include <time.h>
 #include <sys/time.h>
 
-#define N 1000
+#define N 10000
+#define blok_boyu 20
 int main(){
     struct timeval t_before, t_after, t_diff;
     gettimeofday(&t_before, NULL);
 
     float A[N][N], B[N][N];
-    for(int i=0;i<N;i++){
-        for(int j=0;j<N;j++){
-            A[i][j] = A[i][j] + B[i][j];
+    for(int i=0;i<N;i+=blok_boyu){
+        for(int j=0;j<N;j+=blok_boyu){
+            for(int ii=i;ii<i+blok_boyu;ii++){
+                for(int jj=j;jj<j+blok_boyu;jj++){
+                    A[ii][jj] = A[ii][jj] + B[jj][ii];
+                }
+            }
         }
     }
     gettimeofday(&t_after, NULL);
